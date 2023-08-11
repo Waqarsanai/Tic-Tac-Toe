@@ -128,35 +128,89 @@
             }
         }
 
-        function computerMove() {
-            const availableMoves = [];
+      // ... (existing code)
 
-            for (let i = 0; i < 3; i++) {
-                for (let j = 0; j < 3; j++) {
-                    if (board[i][j] === '') {
-                        availableMoves.push({ row: i, col: j });
-                    }
-                }
-            }
+function computerMove() {
+    const bestMove = findBestMove(board);
+    const computerCell = boardCells[bestMove.row * 3 + bestMove.col];
 
-            if (availableMoves.length > 0) {
-                const randomMove = availableMoves[Math.floor(Math.random() * availableMoves.length)];
-                const computerCell = boardCells[randomMove.row * 3 + randomMove.col];
+    board[bestMove.row][bestMove.col] = players[currentPlayer];
+    computerCell.textContent = players[currentPlayer];
+    computerCell.style.pointerEvents = 'none'; // Disable further clicks on this cell
+    currentPlayer = 1 - currentPlayer; // Switch players
 
-                board[randomMove.row][randomMove.col] = players[currentPlayer];
-                computerCell.textContent = players[currentPlayer];
-                computerCell.style.pointerEvents = 'none'; // Disable further clicks on this cell
-                currentPlayer = 1 - currentPlayer; // Switch players
+    if (isGameWon()) {
+        statusDisplay.textContent = `${players[1 - currentPlayer]} wins!`;
+    } else if (isBoardFull()) {
+        statusDisplay.textContent = "It's a draw!";
+    } else {
+        statusDisplay.textContent = `Player's turn`;
+    }
+}
 
-                if (isGameWon()) {
-                    statusDisplay.textContent = `${players[1 - currentPlayer]} wins!`;
-                } else if (isBoardFull()) {
-                    statusDisplay.textContent = "It's a draw!";
-                } else {
-                    statusDisplay.textContent = `Player's turn`;
+function findBestMove(board) {
+    let bestVal = -Infinity;
+    let bestMove = { row: -1, col: -1 };
+
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (board[i][j] === '') {
+                board[i][j] = players[currentPlayer];
+
+                const moveVal = minimax(board, 0, false);
+
+                board[i][j] = ''; // Undo the move
+
+                if (moveVal > bestVal) {
+                    bestVal = moveVal;
+                    bestMove.row = i;
+                    bestMove.col = j;
                 }
             }
         }
+    }
+
+    return bestMove;
+}
+
+function minimax(board, depth, isMaximizing) {
+    if (isGameWon()) {
+        return isMaximizing ? -10 + depth : 10 - depth;
+    } else if (isBoardFull()) {
+        return 0;
+    }
+
+    if (isMaximizing) {
+        let bestVal = -Infinity;
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === '') {
+                    board[i][j] = players[currentPlayer];
+                    bestVal = Math.max(bestVal, minimax(board, depth + 1, !isMaximizing));
+                    board[i][j] = ''; // Undo the move
+                }
+            }
+        }
+        
+        return bestVal;
+    } else {
+        let bestVal = Infinity;
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === '') {
+                    board[i][j] = players[1 - currentPlayer];
+                    bestVal = Math.min(bestVal, minimax(board, depth + 1, !isMaximizing));
+                    board[i][j] = ''; // Undo the move
+                }
+            }
+        }
+
+        return bestVal;
+    }
+}
+
 
         function isGameWon() {
             // Check rows, columns, and diagonals for a win
