@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 .container {
@@ -15,40 +15,28 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+    width: 90%; /* Make the container take up 90% of the screen width */
+    max-width: 400px; /* Maximum width of the container */
+    margin: auto; /* Center the container */
 }
 
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 5px;
-    justify-content: center;
-    max-width: 100%;
 }
 
 .cell {
     width: 100%;
-    padding-bottom: 100%; /* Makes the cells square */
-    position: relative;
+    padding-bottom: 100%; /* Maintain a square aspect ratio */
     background-color: #e0e0e0;
     border: 1px solid #ccc;
-    font-size: 8vw;
+    font-size: 6vw; /* Adjust font size to be responsive */
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: background-color 0.3s ease-in-out;
-}
-
-.cell::after {
-    content: '';
-    display: block;
-    padding-bottom: 100%;
-}
-
-.cell span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .cell:hover {
@@ -56,7 +44,7 @@ body {
 }
 
 button {
-    font-size: 18px;
+    font-size: 4vw; /* Make the button font size responsive */
     margin-top: 10px;
     cursor: pointer;
     background-color: #4caf50;
@@ -72,7 +60,7 @@ button:hover {
 }
 
 .status {
-    font-size: 24px;
+    font-size: 5vw; /* Make the status text size responsive */
     font-weight: bold;
     margin-top: 20px;
 }
@@ -83,47 +71,9 @@ button:hover {
 
 /* Responsive Design */
 
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-        max-width: 100%;
-    }
-
-    .cell {
-        font-size: 12vw;
-    }
-
-    button {
-        font-size: 16px;
-        padding: 8px 16px;
-    }
-
-    .status {
-        font-size: 20px;
-    }
-}
-
 @media (min-width: 600px) {
     .container {
-        max-width: 500px;
-    }
-
-    .cell {
-        font-size: 6vw;
-    }
-
-    button {
-        font-size: 18px;
-    }
-
-    .status {
-        font-size: 22px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .container {
-        max-width: 600px;
+        max-width: 80%; /* Make sure the container doesn't exceed 80% of the screen width on medium screens */
     }
 
     .cell {
@@ -131,10 +81,28 @@ button:hover {
     }
 
     button {
-        font-size: 20px;
+        font-size: 3vw;
     }
 
     .status {
-        font-size: 24px;
+        font-size: 4vw;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 60%; /* Make sure the container doesn't exceed 60% of the screen width on large screens */
+    }
+
+    .cell {
+        font-size: 2vw;
+    }
+
+    button {
+        font-size: 2vw;
+    }
+
+    .status {
+        font-size: 3vw;
     }
 }
