@@ -24,11 +24,12 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 5px;
     justify-content: center;
+    max-width: 100%;
 }
 
 .cell {
     width: 100%;
-    padding-bottom: 100%; /* This makes the cells square */
+    padding-bottom: 100%; /* Makes the cells square */
     position: relative;
     background-color: #e0e0e0;
     border: 1px solid #ccc;
