@@ -8,6 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden; /* Prevent any overflow on small screens */
 }
 
 .container {
@@ -15,15 +16,22 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 90%; /* Make the container take up 90% of the screen width */
-    max-width: 400px; /* Maximum width of the container */
-    margin: auto; /* Center the container */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100vw;
+    max-height: 100vh;
 }
 
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 5px;
+    width: 100%;
+    max-width: 90vmin; /* Max width and height relative to the viewport size */
+    max-height: 90vmin;
+    aspect-ratio: 1; /* Maintain a perfect square */
 }
 
 .cell {
@@ -31,7 +39,7 @@ body {
     padding-bottom: 100%; /* Maintain a square aspect ratio */
     background-color: #e0e0e0;
     border: 1px solid #ccc;
-    font-size: 6vw; /* Adjust font size to be responsive */
+    font-size: calc(90vmin / 6); /* Font size based on the viewport size */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -44,7 +52,7 @@ body {
 }
 
 button {
-    font-size: 4vw; /* Make the button font size responsive */
+    font-size: calc(90vmin / 12); /* Responsive button font size */
     margin-top: 10px;
     cursor: pointer;
     background-color: #4caf50;
@@ -60,49 +68,40 @@ button:hover {
 }
 
 .status {
-    font-size: 5vw; /* Make the status text size responsive */
+    font-size: calc(90vmin / 10); /* Responsive status text size */
     font-weight: bold;
     margin-top: 20px;
 }
 
-.button {
-    margin-bottom: 5px;
-}
-
-/* Responsive Design */
-
+/* Adjustments for larger screens */
 @media (min-width: 600px) {
-    .container {
-        max-width: 80%; /* Make sure the container doesn't exceed 80% of the screen width on medium screens */
+    .board {
+        max-width: 60vmin;
+        max-height: 60vmin;
     }
-
     .cell {
-        font-size: 4vw;
+        font-size: calc(60vmin / 6);
     }
-
     button {
-        font-size: 3vw;
+        font-size: calc(60vmin / 12);
     }
-
     .status {
-        font-size: 4vw;
+        font-size: calc(60vmin / 10);
     }
 }
 
 @media (min-width: 1024px) {
-    .container {
-        max-width: 60%; /* Make sure the container doesn't exceed 60% of the screen width on large screens */
+    .board {
+        max-width: 50vmin;
+        max-height: 50vmin;
     }
-
     .cell {
-        font-size: 2vw;
+        font-size: calc(50vmin / 6);
     }
-
     button {
-        font-size: 2vw;
+        font-size: calc(50vmin / 12);
     }
-
     .status {
-        font-size: 3vw;
+        font-size: calc(50vmin / 10);
     }
 }
